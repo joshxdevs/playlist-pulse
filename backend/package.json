@@ -1,0 +1,31 @@
+{
+  "name": "playlist-pulse-backend",
+  "version": "1.0.0",
+  "description": "Playlist Tracker backend API — Express + Prisma + Better Auth",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --env-file=../.env --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:push": "cp ../.env .env && prisma db push && rm -f .env",
+    "db:studio": "cp ../.env .env && prisma studio",
+    "db:generate": "cp ../.env .env && prisma generate && rm -f .env"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "axios": "^1.7.9",
+    "better-auth": "^1.2.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "prisma": "^6.6.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
+  }
+}
