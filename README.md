@@ -68,6 +68,7 @@ npm run dev       # starts on http://localhost:5173
 - ✅ Add YouTube playlists by URL
 - ✅ Todo-style video checklist
 - ✅ Progress bars per playlist
+- ✅ Track total playlist durations and individual video lengths
 - ✅ "Continue Learning" — auto-scroll to next video
 - ✅ Multi-playlist management (add, rename, delete)
 - ✅ Mobile responsive with collapsible sidebar
