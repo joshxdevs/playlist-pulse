@@ -78,13 +78,14 @@ model Playlist {
 }
 
 model Video {
-  id             String  @id @default(cuid())
-  playlistId     String
-  title          String
-  youtubeVideoId String
-  thumbnail      String
-  order          Int
-  completed      Boolean @default(false)
+  id              String  @id @default(cuid())
+  playlistId      String
+  title           String
+  youtubeVideoId  String
+  thumbnail       String
+  order           Int
+  completed       Boolean @default(false)
+  durationSeconds Int?
 
   playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
 }

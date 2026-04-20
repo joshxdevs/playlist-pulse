@@ -34,6 +34,7 @@ export async function createPlaylist(userId: string, youtubeUrl: string) {
           thumbnail: v.thumbnail,
           order: v.order,
           completed: false,
+          durationSeconds: v.durationSeconds,
         })),
       },
     },
@@ -46,7 +47,7 @@ export async function createPlaylist(userId: string, youtubeUrl: string) {
 }
 
 /**
- * Return all playlists for a user with computed progress stats.
+ * Return all playlists for a user with computed progress + duration stats.
  */
 export async function getUserPlaylists(userId: string) {
   const playlists = await prisma.playlist.findMany({
@@ -54,7 +55,14 @@ export async function getUserPlaylists(userId: string) {
     include: {
       videos: {
         orderBy: { order: "asc" },
-        select: { id: true, title: true, completed: true, order: true, thumbnail: true },
+        select: {
+          id: true,
+          title: true,
+          completed: true,
+          order: true,
+          thumbnail: true,
+          durationSeconds: true,
+        },
       },
     },
     orderBy: { createdAt: "desc" },
@@ -67,18 +75,24 @@ export async function getUserPlaylists(userId: string) {
     const lastWatched =
       [...p.videos].reverse().find((v) => v.completed) ?? null;
 
+    const totalDurationSeconds = p.videos.reduce(
+      (sum, v) => sum + (v.durationSeconds ?? 0),
+      0
+    );
+
     return {
       ...p,
       totalVideos,
       completedVideos,
       nextVideo,
       lastWatched,
+      totalDurationSeconds,
     };
   });
 }
 
 /**
- * Return a single playlist with full video list.
+ * Return a single playlist with full video list and total duration.
  */
 export async function getPlaylistById(playlistId: string, userId: string) {
   const playlist = await prisma.playlist.findFirst({
@@ -90,7 +104,12 @@ export async function getPlaylistById(playlistId: string, userId: string) {
     throw new Error("Playlist not found.");
   }
 
-  return playlist;
+  const totalDurationSeconds = playlist.videos.reduce(
+    (sum, v) => sum + (v.durationSeconds ?? 0),
+    0
+  );
+
+  return { ...playlist, totalDurationSeconds };
 }
 
 /**
