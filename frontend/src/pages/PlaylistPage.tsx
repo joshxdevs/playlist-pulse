@@ -5,6 +5,7 @@ import VideoItem from "../components/video/VideoItem";
 import ProgressBar from "../components/video/ProgressBar";
 import Spinner from "../components/ui/Spinner";
 import Button from "../components/ui/Button";
+import { formatDuration } from "../lib/utils";
 
 export default function PlaylistPage() {
   const { id } = useParams<{ id: string }>();
@@ -73,6 +74,7 @@ export default function PlaylistPage() {
             </h1>
             <p className="text-sm text-app-400">
               {completedCount} of {totalCount} videos completed
+              {playlist.totalDurationSeconds > 0 && ` • Total Length: ${formatDuration(playlist.totalDurationSeconds)}`}
             </p>
           </div>
 

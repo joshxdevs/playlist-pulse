@@ -8,6 +8,7 @@ export interface Video {
   thumbnail: string;
   order: number;
   completed: boolean;
+  durationSeconds: number | null;
 }
 
 export interface PlaylistVideo {
@@ -16,6 +17,7 @@ export interface PlaylistVideo {
   completed: boolean;
   order: number;
   thumbnail: string;
+  durationSeconds: number | null;
 }
 
 export interface PlaylistSummary {
@@ -29,6 +31,7 @@ export interface PlaylistSummary {
   completedVideos: number;
   nextVideo: PlaylistVideo | null;
   lastWatched: PlaylistVideo | null;
+  totalDurationSeconds: number;
 }
 
 export interface PlaylistDetail {
@@ -38,6 +41,7 @@ export interface PlaylistDetail {
   youtubePlaylistId: string;
   createdAt: string;
   videos: Video[];
+  totalDurationSeconds: number;
 }
 
 export interface User {

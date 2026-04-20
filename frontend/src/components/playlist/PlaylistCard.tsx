@@ -5,6 +5,7 @@ import ProgressBar from "../video/ProgressBar";
 import RenamePlaylistModal from "./RenamePlaylistModal";
 import Button from "../ui/Button";
 import { useDeletePlaylist } from "../../hooks/usePlaylists";
+import { formatDuration } from "../../lib/utils";
 
 interface PlaylistCardProps {
   playlist: PlaylistSummary;
@@ -56,9 +57,15 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
             </div>
           )}
 
-          {/* Video count */}
-          <div className="absolute bottom-2 left-3 text-xs text-app-200 font-medium">
-            {playlist.totalVideos} videos
+          {/* Video count & duration */}
+          <div className="absolute bottom-2 left-3 flex items-center gap-2 text-xs text-app-200 font-medium">
+            <span>{playlist.totalVideos} videos</span>
+            {playlist.totalDurationSeconds > 0 && (
+              <>
+                <span>•</span>
+                <span>{formatDuration(playlist.totalDurationSeconds)}</span>
+              </>
+            )}
           </div>
         </div>
 

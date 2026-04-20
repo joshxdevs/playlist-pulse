@@ -1,4 +1,5 @@
 import type { Video } from "../../types";
+import { formatDuration } from "../../lib/utils";
 
 interface VideoItemProps {
   video: Video;
@@ -49,16 +50,23 @@ export default function VideoItem({ video, index, onToggle, isToggling }: VideoI
         </div>
       </a>
 
-      {/* Title */}
-      <a
-        href={youtubeUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`flex-1 min-w-0 text-sm font-medium leading-snug transition-colors hover:text-accent
-          ${video.completed ? "line-through text-app-500" : "text-app-100"}`}
-      >
-        <span className="line-clamp-2">{video.title}</span>
-      </a>
+      {/* Title & Duration */}
+      <div className="flex-1 min-w-0 flex flex-col gap-1">
+        <a
+          href={youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`text-sm font-medium leading-snug transition-colors hover:text-accent
+            ${video.completed ? "line-through text-app-500" : "text-app-100"}`}
+        >
+          <span className="line-clamp-2">{video.title}</span>
+        </a>
+        {video.durationSeconds != null && (
+          <span className="text-xs text-app-400 font-medium">
+            {formatDuration(video.durationSeconds)}
+          </span>
+        )}
+      </div>
 
       {/* Checkbox */}
       <button
