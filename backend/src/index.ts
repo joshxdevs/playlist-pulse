@@ -5,6 +5,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./auth";
 import playlistRoutes from "./routes/playlists";
 import videoRoutes from "./routes/videos";
+import adminRoutes from "./routes/admin";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 // ─── Routes ────────────────────────────────────────────────────────────────────
 app.use("/api/playlists", playlistRoutes);
 app.use("/api/videos", videoRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ─── Health Check ──────────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => {
