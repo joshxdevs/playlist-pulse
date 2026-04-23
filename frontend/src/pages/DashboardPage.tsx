@@ -4,7 +4,7 @@ import { usePlaylists } from "../hooks/usePlaylists";
 import PlaylistCard from "../components/playlist/PlaylistCard";
 import AddPlaylistModal from "../components/playlist/AddPlaylistModal";
 import Button from "../components/ui/Button";
-import Spinner from "../components/ui/Spinner";
+import { DashboardSkeleton } from "../components/ui/Skeletons";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -15,6 +15,9 @@ export default function DashboardPage() {
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
+  // Show skeleton while fetching
+  if (isLoading) return <DashboardSkeleton />;
 
   const filtered = (playlists ?? []).filter((p) =>
     p.title.toLowerCase().includes(search.toLowerCase())
@@ -69,20 +72,15 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* States */}
-      {isLoading && (
-        <div className="flex items-center justify-center py-20">
-          <Spinner size="lg" />
-        </div>
-      )}
-
+      {/* Error state */}
       {error && (
         <div className="text-center py-16 text-app-500">
           <p>Failed to load playlists. Please refresh.</p>
         </div>
       )}
 
-      {!isLoading && !error && playlists?.length === 0 && (
+      {/* Empty state */}
+      {!error && playlists?.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
           <div className="w-20 h-20 bg-app-800 rounded-2xl flex items-center justify-center mb-6 border border-app-700">
             <svg className="w-10 h-10 text-app-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +102,7 @@ export default function DashboardPage() {
       )}
 
       {/* Playlist sections */}
-      {!isLoading && !error && (
+      {!error && (
         <>
           {/* In Progress */}
           {inProgress.length > 0 && (
