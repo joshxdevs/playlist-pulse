@@ -21,6 +21,13 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
       ? Math.round((playlist.completedVideos / playlist.totalVideos) * 100)
       : 0;
 
+  // Dynamic: sum of durations for incomplete videos = time remaining
+  const remainingSeconds = playlist.videos.reduce(
+    (sum, v) => (v.completed ? sum : sum + (v.durationSeconds ?? 0)),
+    0
+  );
+  const hasDuration = (playlist.totalDurationSeconds ?? 0) > 0;
+
   const thumbnailUrl =
     playlist.videos[0]?.thumbnail ||
     `https://img.youtube.com/vi/default/mqdefault.jpg`;
@@ -60,7 +67,13 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
           {/* Video count & duration */}
           <div className="absolute bottom-2 left-3 flex items-center gap-2 text-xs text-app-200 font-medium">
             <span>{playlist.totalVideos} videos</span>
-            {playlist.totalDurationSeconds > 0 && (
+            {hasDuration && pct < 100 && remainingSeconds > 0 && (
+              <>
+                <span>•</span>
+                <span className="text-accent">{formatDuration(remainingSeconds)} left</span>
+              </>
+            )}
+            {(pct === 100 || !hasDuration) && playlist.totalDurationSeconds > 0 && (
               <>
                 <span>•</span>
                 <span>{formatDuration(playlist.totalDurationSeconds)}</span>

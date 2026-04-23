@@ -126,3 +126,109 @@ export function PlaylistPageSkeleton() {
     </div>
   );
 }
+
+// ─── Admin dashboard skeleton ─────────────────────────────────────────────────
+
+function AdminTableRowSkeleton() {
+  return (
+    <tr className="border-b border-app-700/50 last:border-0">
+      {/* Playlist title */}
+      <td className="px-5 py-3">
+        <Shimmer className="h-3.5 w-48" />
+      </td>
+      {/* Videos */}
+      <td className="px-5 py-3 text-right">
+        <div className="flex justify-end">
+          <Shimmer className="h-3 w-10" />
+        </div>
+      </td>
+      {/* Duration */}
+      <td className="px-5 py-3 text-right">
+        <div className="flex justify-end">
+          <Shimmer className="h-3 w-16" />
+        </div>
+      </td>
+      {/* Progress */}
+      <td className="px-5 py-3">
+        <div className="flex items-center justify-end gap-2">
+          <Shimmer className="h-1.5 w-24 rounded-full" />
+          <Shimmer className="h-3 w-8" />
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function AdminUserRowSkeleton() {
+  return (
+    <div className="bg-app-800 border border-app-700 rounded-2xl overflow-hidden">
+      {/* User header row */}
+      <div className="px-5 py-4 border-b border-app-700 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+        <div className="flex flex-col gap-1.5">
+          <Shimmer className="h-4 w-36" />
+          <Shimmer className="h-3 w-52" />
+        </div>
+        <div className="flex items-center gap-3">
+          <Shimmer className="h-5 w-20 rounded-full" />
+          <Shimmer className="h-3 w-28" />
+        </div>
+      </div>
+
+      {/* Table header */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-app-700">
+              <th className="px-5 py-2.5 text-left">
+                <Shimmer className="h-2.5 w-14" />
+              </th>
+              <th className="px-5 py-2.5 text-right">
+                <div className="flex justify-end"><Shimmer className="h-2.5 w-10" /></div>
+              </th>
+              <th className="px-5 py-2.5 text-right">
+                <div className="flex justify-end"><Shimmer className="h-2.5 w-14" /></div>
+              </th>
+              <th className="px-5 py-2.5 text-right">
+                <div className="flex justify-end"><Shimmer className="h-2.5 w-14" /></div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <AdminTableRowSkeleton key={i} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export function AdminDashboardSkeleton() {
+  return (
+    <div className="p-6 max-w-7xl mx-auto">
+      {/* Page heading */}
+      <div className="mb-8 flex flex-col gap-2">
+        <Shimmer className="h-7 w-44" />
+        <Shimmer className="h-4 w-64" />
+      </div>
+
+      {/* 3 stat cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="bg-app-800 border border-app-700 rounded-2xl p-5 flex flex-col gap-3">
+            <Shimmer className="h-3 w-24" />
+            <Shimmer className="h-9 w-16" />
+          </div>
+        ))}
+      </div>
+
+      {/* User rows */}
+      <div className="flex flex-col gap-6">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <AdminUserRowSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
